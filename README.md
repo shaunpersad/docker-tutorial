@@ -211,9 +211,9 @@ If that sounds like a chore, that's because it is, especially as your app grows 
 
 As it stands right now, each time you add or modify your source files, you'll need to rebuild the image and rerun the container.
 
-In part 2, we will explore how to get around this so that your app updates automatically when you modify the source code.
+In Part 2, we will explore how to get around this so that your app updates automatically when you modify the source code.
 
 We will also get more in-depth with Docker Compose and how to use it to build more complex environments.
 
-Head to Part 2 now! [https://github.com/shaunpersad/docker-tutorial-pt2]
+Head to []Part 2](https://github.com/shaunpersad/docker-tutorial-pt2) now!
 
