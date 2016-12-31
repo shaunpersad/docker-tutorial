@@ -2,7 +2,17 @@
 A simple intro to Docker with Node.js
 
 
+## How to use this tutorial
+
+Clone this project, then follow along. At the end of it, two new files will be created by you: `package.json` and `index.js`.
+
+You may then use your version of this project for Part 2.
+```bash
+git clone https://github.com/shaunpersad/docker-tutorial
+```
+
 ## The Who/What/Why of Docker
+
 (Warning: I am not a Docker expert)
 
 Docker is a container service. For our intents and purposes, a container is similar to a virtual machine, but not quite the same.
@@ -201,7 +211,9 @@ If that sounds like a chore, that's because it is, especially as your app grows 
 
 As it stands right now, each time you add or modify your source files, you'll need to rebuild the image and rerun the container.
 
-In part 2 (coming soon), we will explore how to get around this so that your app updates automatically when you modify the source code.
+In part 2, we will explore how to get around this so that your app updates automatically when you modify the source code.
 
 We will also get more in-depth with Docker Compose and how to use it to build more complex environments.
+
+Head to Part 2 now! [https://github.com/shaunpersad/docker-tutorial-pt2]
 
