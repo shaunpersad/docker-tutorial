@@ -1,0 +1,6 @@
+version: '2'
+services:
+  app:
+    build: .
+    image: shaunpersad/docker-tutorial
+    command: node index.js
