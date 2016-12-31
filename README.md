@@ -215,5 +215,5 @@ In Part 2, we will explore how to get around this so that your app updates autom
 
 We will also get more in-depth with Docker Compose and how to use it to build more complex environments.
 
-Head to []Part 2](https://github.com/shaunpersad/docker-tutorial-pt2) now!
+Head to [Part 2](https://github.com/shaunpersad/docker-tutorial-pt2) now!
 
