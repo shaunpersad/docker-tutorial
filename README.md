@@ -81,6 +81,9 @@ As such, you generally want to use Docker Compose when considering a microservic
 
 Download [Docker](https://docs.docker.com/docker-for-mac/) and create a new project directory and repository.
 
+Please note the system requirements: https://docs.docker.com/docker-for-mac/#/what-to-know-before-you-install
+
+Basically, if you're on Mac (which I'm assuming), you should have OS X El Capitan 10.11 or higher, or you may get weird bugs.
 
 ### Step 2 - Dockerfile
 
