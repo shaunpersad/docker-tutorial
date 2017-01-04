@@ -228,6 +228,8 @@ Alternatively, we could have stuck this command to run automatically, if we spec
 ```bash
 CMD [ "node", "index.js" ]
 ```
+When the command is run, you'll see `Hello World!` output in the terminal.
+
 Also notice that the app exited immediately. This is the typical behavior of a node app that is not expecting any I/O.
 If we were building an express app or some other app that listened to a port, the container would have stayed up.
 
@@ -237,6 +239,12 @@ Run the following command:
 ```bash
 docker-compose up
 ```
+You should see something similar to this output in the terminal:
+```bash
+app_1  | Hello world!
+```
+"app_1" is simply a tag for the service we are running. It's necessary because with Docker Compose, we can run several services at once.
+
 Note that with steps 6B and 7B, we could've skipped the `docker-compose build` step, and went directly to `docker-compose up`,
 which would've automatically built the image first before running.
 
