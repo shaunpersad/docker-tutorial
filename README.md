@@ -218,6 +218,8 @@ which will print "Hello World!" in the console.
 
 #### 7A - the regular Docker way
 
+Regardless of if you used Docker or Docker Compose in Step 6, you can still use just Docker to run the built image, since both ways resulted in the creation of a referencable image called `shaunpersad/docker-tutorial`.
+
 Run the following command:
 ```bash
 docker run shaunpersad/docker-tutorial node index.js
