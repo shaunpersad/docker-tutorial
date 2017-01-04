@@ -175,6 +175,8 @@ Now that we have everything the Dockerfile requires, we can build our image!
 
 We can use either Docker or Docker Compose to do this.  Both ways will be described.
 
+The end result of either way will be a runnable image called `shaunpersad/docker-tutorial`.
+
 #### 6A - The regular Docker way
 
 Run the following command:
