@@ -4,24 +4,19 @@ A simple intro to Docker with Node.js
 
 ## How to use this tutorial
 
-Clone this project, then follow along. At the end of it, two new files will be created by you: `package.json` and `index.js`.
+The files in this project represents the end result of this tutorial, so please create your own project, and use this
+repository as a final check-against.
 
-You may then use your version of this project for Part 2.
-```bash
-git clone https://github.com/shaunpersad/docker-tutorial
-```
 
-## The Who/What/Why of Docker
+## Docker? I hardly know her!
 
 (Warning: I am not a Docker expert)
 
-Docker is a container service. For our intents and purposes, a container is similar to a virtual machine, but not quite the same.
-
-You may be used to working with Vagrant to build, provision, and use VMs for individual projects. Docker can replace Vagrant in those duties.
+Docker is a container service - a way of building and running isolated environments. You may be used to working with Vagrant to build, provision, and use VMs for individual projects. Docker can replace Vagrant in those duties. For our intents and purposes, a container is similar to a virtual machine, but not quite the same.
 
 If none of this is familiar to you, the gist is that containers and/or VMs are isolated environments that can run applications inside of them.
 
-For example, you can build yourself a Node.js environment with Postgres and Elasticsearch without ever having to install any of those technologies directly on your local machine.  They, and your application, will run inside the isolated environment.
+For example, you can build yourself a Node.js-capable environment with Postgres and Elasticsearch without ever having to install any of those technologies directly on your local machine.  They, and your application, will run inside the isolated environment.
 
 This is a very powerful concept, as these environments are repeatable and shareable, meaning that your entire team, your staging server, and your production server, can all use the same environments:
 the same OS, the same versions of languages and tech stacks, etc.
@@ -33,18 +28,16 @@ For example, if I download the Node image, I can run a container based off of th
 You can learn more about Docker here: https://docs.docker.com/engine/getstarted/
 
 
-## Some more Docker concepts
+## Some Docker concepts
 
-Before we start using Docker, there are some more concepts that we should familiarize ourselves with, particularly
+Before we get into the tutorial and start using Docker, there are some more concepts that we should familiarize ourselves with, particularly
 the relationships between *Docker*, *Dockerfiles*, *Docker Compose*, and how they in turn relate to the concepts of *images* and *containers*.
 
-### Docker and Dockerfiles
+### Dockerfile => Image => Container
 
-When you create a new project that you want to use Docker for, the first thing you'll want to do is create a `Dockerfile` file.
+When you create a new project that you want to use Docker for, the first thing you'll want to do is create a `Dockerfile` file, in a similar idea to how you'd create a gulpfile or gruntfile.
 
-In it, you will specify the details of the environment you wish to create.
-
-**A Dockerfile is the spec used to create an image.**
+In it, you will specify the details of the environment you wish to create. **A Dockerfile is the spec used to create an image.**
 
 Normally in your Dockerfile, you would specify a base image (like Ubuntu, Node, etc.) to extend from, and then add in your application-specific requirements.
 
@@ -56,7 +49,7 @@ Dockerfile => Shareable image based on Dockerfile => run instances of the image 
 
 Read more about Dockerfiles and the image creation process here: https://docs.docker.com/engine/getstarted/step_four/
 
-### Docker and Docker Compose
+### Docker vs. Docker Compose
 
 Generally, when you want to spin up a container from an image, you will use Docker. However, there is also another program called Docker Compose that can also do that and more.
 
@@ -75,7 +68,7 @@ You can then run this setup via Docker Compose.
 As such, you generally want to use Docker Compose when considering a microservices architecture, and Docker when considering a monolithic architecture.
 
 
-## Creating a Docker project from scratch:
+## Getting started:
 
 ### Step 1 - Prereqs.
 
@@ -85,9 +78,29 @@ Please note the system requirements: https://docs.docker.com/docker-for-mac/#/wh
 
 Basically, if you're on Mac (which I'm assuming), you should have OS X El Capitan 10.11 or higher, or you may get weird bugs.
 
+Next, set up a `docker-tutorial` directory to house your tutorial project.
+
 ### Step 2 - Dockerfile
 
-Add a Dockerfile, like the one in this project, which does the following:
+Add a Dockerfile, like the one in this project:
+```Dockerfile
+# Node.js version
+FROM node:6.9.2
+
+# Create app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+# get the npm modules that need to be installed
+COPY package.json /usr/src/app/
+
+# install npm modules
+RUN npm install
+
+# copy the source files from host to container
+COPY . /usr/src/app
+```
+The above Dockerfile does the following:
 - Builds from the official existing Node.js image
     - This image has its own OS, which differs depending on which version you select to build from.
     - More info here: https://hub.docker.com/_/node/
@@ -95,19 +108,22 @@ Add a Dockerfile, like the one in this project, which does the following:
 - Copies package.json and runs `npm install` from it
 - Copies your app source files to the container
 
+To see the full extent of what Dockerfiles can do, you may want to browse through the [documentation](https://docs.docker.com/engine/reference/builder/).
 
 ### Step 3 - .dockerignore
 
 Much like .gitignore, .dockerignore ignores files when copying from your host to the container.
-In this case, we don't want to copy any of the logs generated by node, or the node_modules from the host.
-
+In this case, we don't want to copy any of the logs generated by node, or the node_modules from the host:
+```git exclude
+node_modules
+npm-debug.log
+```
 
 ### Step 4 - Generate a `package.json` file
 
 Notice that the Dockerfile specifies to copy `package.json` into the container. However, we don't yet have one, so attempting to build this image will fail.
 
-To get a `package.json` file, you must run `npm init`, but, since the whole point of containers is to *not* install environments on your host machine, 
-how will we run `npm init` without having Node or NPM locally?
+To get a `package.json` file, you must run `npm init`, but, since the whole point of containers is to *not* install environments on your host machine, how will we run `npm init` without having Node or NPM locally?
 
 The answer is to run the official Node.js image as a container in order to create a `package.json` file, by linking your host directory to a directory in the container.
 In doing so, when you create the `package.json` file in the container, it will automatically show up in your host directory as well.
@@ -145,7 +161,6 @@ For your convenience, I have saved both commands in the `scripts` directory:
     - This will also be useful when adding new packages with `npm install {package} -- save`
 - `bootstrap.sh` can be used to automatically generate a `package.json` file when you start a new project.
 
-
 ### Step 5 - Your source code
 
 To build an app, we need code! Let's make it simple by creating an `index.js` file that contains the following:
@@ -172,8 +187,23 @@ docker build -t shaunpersad/docker-tutorial .
 
 #### 6B - The Docker Compose way
 
-Notice that we have a `docker-compose.yml` file, which has a `build` property that points to the directory of the Dockerfile, and the `image` property that names it.
-This file will allow us to run the following:
+Create a `docker-compose.yml` file. In it, we will specify a single *service*:
+```yaml
+version: '2'
+services:
+  app:
+    build: .
+    image: shaunpersad/docker-tutorial
+    command: node index.js
+```
+The above file has the following properties:
+- `version`: This lets Docker Compose know which format the YAML file is in
+- `services`: Here is where we define the containers we want to run
+    - `app`: The name of our app service. There's nothing special about this name. You can call it "the-bunny-ranch" if you wanted to.
+        - `build`: The directory that contains our `Dockerfile`
+        - `image`: The name of the image we'll create when we build. If this was specified without a `build` property, Docker Compose would have attempted to pull that image from [Docker Hub](https://hub.docker.com/explore/), a public repository of images.
+        - `command`: The command to run in the container once it's running
+Now run the following:
 ```bash
 docker-compose build
 ```
@@ -204,6 +234,8 @@ Run the following command:
 ```bash
 docker-compose up
 ```
+Note that with steps 6B and 7B, we could've skipped the `docker-compose build` step, and went directly to `docker-compose up`,
+which would've automatically built the image first before running.
 
 
 ## Congratulations!
