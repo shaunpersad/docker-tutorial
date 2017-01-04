@@ -131,7 +131,7 @@ In doing so, when you create the `package.json` file in the container, it will a
 
 Alternatively, you can manually create one, but you won't get the benefits of it being generated for you.
 
-#### 4A: - Create a terminal
+#### 4A - Create a terminal
 
 To generate the `package.json` file, we need to create an interactive terminal into a container that has node: 
 ```bash
