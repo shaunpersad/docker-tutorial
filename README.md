@@ -7,6 +7,10 @@ A simple intro to Docker with Node.js
 The files in this project represents the end result of this tutorial, so please create your own project, and use this
 repository as a final check-against.
 
+## Goals
+- To familiarize ourselves with Docker concepts and basics
+- To build a basic app that runs in a Docker container
+
 
 ## Docker? I hardly know her!
 
