@@ -135,7 +135,7 @@ In doing so, when you create the `package.json` file in the container, it will a
 
 Alternatively, you can manually create one, but you won't get the benefits of it being generated for you.
 
-#### 4A - Create a terminal
+#### Create a terminal
 
 To generate the `package.json` file, we need to create an interactive terminal into a container that has node: 
 ```bash
@@ -151,7 +151,7 @@ From the above, we've learned that you can use `docker run` to run images, and t
 To learn more about `docker run`, read here: https://docs.docker.com/engine/reference/run/
 To learn more about how to link directories from your host to docker containers, read here: https://docs.docker.com/engine/tutorials/dockervolumes/
 
-#### 4B - Use the terminal to create the package.json
+#### Use the terminal to create the package.json
 
 Now that we have a running terminal, we can run `npm init`. Once done with the setup, type `exit` to exit the container.
 
